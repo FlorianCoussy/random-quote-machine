@@ -1,6 +1,11 @@
 "use strict";
 
 const camperbotGistURL = 'https://gist.githubusercontent.com/camperbot/5a022b72e96c4c9585c32bf6a75f62d9/raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/quotes.json';
+const twitterURL = 'https://twitter.com/intent/tweet?hashtags=quotes,freecodecamp&related=freecodecamp&text=';
+const tumblrURLs = [
+  'https://www.tumblr.com/widgets/share/tool?posttype=quote&tags=quotes,freecodecamp&caption=',
+  '&canonicalUrl=https%3A%2F%2Fwww.tumblr.com%2Fbuttons&shareSource=tumblr_share_button'
+];
 const colors = [
   '#16a085',
   '#27ae60',
@@ -39,16 +44,18 @@ const getRandomQuote = () => {
 };
 
 const getQuote = () => {
-  console.log('Getting a new quote...');
   currentQuote = getRandomQuote();
+  console.log('Got a new quote: ', currentQuote);
 
   $('#tweet-quote').attr(
     'href',
-    'https://twitter.com/intent/tweet?hashtags=quotes,freecodecamp&related=freecodecamp&text=' +
-    encodeURIComponent('"' + currentQuote.quote + '" - ' + currentQuote.author)
+    `${twitterURL + encodeURIComponent(`"${currentQuote.quote}" - ${currentQuote.author}`)}`
   );
 
-  console.log(currentQuote);
+  $('#tumblr-quote').attr(
+    'href',
+    `${tumblrURLs[0] + encodeURIComponent(currentQuote.author) + '&content=' + encodeURIComponent(currentQuote.quote) + tumblrURLs[1]}`
+  );
 };
 
 $(document).ready(() => {
