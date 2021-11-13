@@ -56,6 +56,24 @@ const getQuote = () => {
     'href',
     `${tumblrURLs[0] + encodeURIComponent(currentQuote.author) + '&content=' + encodeURIComponent(currentQuote.quote) + tumblrURLs[1]}`
   );
+
+  $('.quote-text').animate(
+    { opacity: 0 },
+    500,
+    () => {
+      $('.quote-text').animate({ opacity: 1 }, 500);
+      $('#text').text(currentQuote.quote);
+    }
+  );
+
+  $('.quote-author').animate(
+    { opacity: 0 },
+    500,
+    () => {
+      $('.quote-author').animate({ opacity: 1 }, 500);
+      $('#author').text(currentQuote.author);
+    }
+  );
 };
 
 $(document).ready(() => {
