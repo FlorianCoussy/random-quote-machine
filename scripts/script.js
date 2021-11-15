@@ -21,7 +21,6 @@ const colors = [
   '#73A857',
 ];
 let quotes;
-let currentQuote;
 
 const fetchQuotes = () => {
   return $.ajax({
@@ -38,13 +37,14 @@ const fetchQuotes = () => {
   });
 };
 
-const getRandomQuote = () => {
-  let randomIndex = Math.floor(Math.random() * quotes.length);
-  return quotes[randomIndex];
+const getRandomItem = (arr) => {
+  let randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
 };
 
 const getQuote = () => {
-  currentQuote = getRandomQuote();
+  let currentQuote = getRandomItem(quotes);
+  let currentColor = getRandomItem(colors);
   console.log('Got a new quote: ', currentQuote);
 
   $('#tweet-quote').attr(
@@ -73,6 +73,19 @@ const getQuote = () => {
       $('.quote-author').animate({ opacity: 1 }, 500);
       $('#author').text(currentQuote.author);
     }
+  );
+
+  $('html body').animate(
+    {
+      backgroundColor: currentColor,
+      color: currentColor,
+    },
+    1000
+  );
+
+  $('.button').animate(
+    { backgroundColor: currentColor },
+    1000
   );
 };
 
